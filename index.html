@@ -4,96 +4,76 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Controllo cartellino buoni pasto residui</title>
+<title>Controllo cartellino buoni pasto residui asp ag</title>
 <style>
 :root{--primary:#174c43;--secondary:#e2eee9;--bg:#f5f7f5;--text:#182622}
 *{box-sizing:border-box}
-body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--text)}
-header{background:var(--primary);color:white;padding:25px max(20px,calc((100vw - 1100px)/2));display:flex;align-items:center;justify-content:space-between;gap:15px}
-.brand{display:flex;align-items:center;gap:12px}
-.logo{width:42px;height:42px;border-radius:12px;background:var(--secondary);color:var(--primary);display:grid;place-items:center;font-size:24px;font-weight:bold}
-h1{font-size:27px;margin:0}
-header p{margin:5px 0 0;font-size:14px;opacity:.85}
-.byline{font-size:12px;white-space:nowrap}
-main{max-width:1100px;margin:auto;padding:30px 20px 45px}
-.intro{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:24px}
-.intro h2{font-size:23px;margin:0 0 8px}
-.intro p{margin:0;line-height:1.55;color:#607068}
-.pill{background:var(--secondary);color:var(--primary);padding:8px 12px;border-radius:20px;font-size:12px;font-weight:bold;white-space:nowrap}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{background:var(--primary);color:white;padding:24px max(20px,calc((100vw - 1100px)/2));display:flex;justify-content:space-between;align-items:center;gap:16px}
+h1{font-size:25px;margin:0}
+header p{font-size:13px;margin:6px 0 0}
+.byline{font-size:12px}
+main{max-width:1100px;margin:auto;padding:28px 20px}
+.intro{margin-bottom:22px}
+.intro h2{margin:0 0 8px}
+.muted{color:#65756d;font-size:14px;line-height:1.5}
 .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:20px}
-.card{background:white;border:1px solid #dce5df;border-radius:18px;padding:24px;box-shadow:0 8px 24px #12352b0a}
-.card h3{margin:0 0 8px;font-size:18px}
-.muted{color:#64746d;font-size:14px;line-height:1.5}
-.drop{margin-top:18px;border:2px dashed #afc4b8;background:#f8fbf9;border-radius:16px;padding:28px 18px;text-align:center;cursor:pointer}
-.drop:hover,.drop.drag{border-color:var(--primary);background:#edf6f1}
-.drop .up{font-size:28px;margin-bottom:9px}
-.drop strong{display:block;margin-bottom:5px}
-.drop small{display:block;color:#718078;margin-top:8px}
+.card{background:white;border:1px solid #dce5df;border-radius:16px;padding:22px}
+.card h3{margin:0 0 8px}
+.drop{margin-top:18px;border:2px dashed #afc4b8;background:#f8fbf9;border-radius:14px;padding:28px 16px;text-align:center;cursor:pointer}
+.drop.drag,.drop:hover{background:#edf6f1;border-color:var(--primary)}
+.drop strong{display:block;margin-bottom:8px}
+.hidden{display:none}
 .filelist{display:grid;gap:8px;margin-top:14px}
-.file{display:flex;align-items:center;gap:10px;padding:10px 12px;background:#f4f7f5;border-radius:10px;font-size:13px}
-.file span{overflow-wrap:anywhere}
-.primary{width:100%;border:0;background:var(--primary);color:white;padding:14px 18px;border-radius:12px;font-weight:750;font-size:15px;cursor:pointer;margin-top:16px}
-.primary:disabled{opacity:.45;cursor:not-allowed}
-.note{margin-top:14px;border-radius:12px;padding:12px 14px;background:#fff5de;color:#725016;font-size:13px;line-height:1.45}
+.file{padding:10px;background:#f4f7f5;border-radius:8px;overflow-wrap:anywhere;font-size:13px}
+button{width:100%;border:0;background:var(--primary);color:white;padding:14px;border-radius:10px;font-weight:bold;cursor:pointer;margin-top:15px}
+button:disabled{opacity:.45;cursor:not-allowed}
+.status{margin-top:12px;font-size:13px;line-height:1.5}
 .metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
-.metric{background:#f4f7f5;padding:16px;border-radius:14px}
-.metric span{display:block;font-size:12px;color:#65756d;margin-bottom:8px}
-.metric strong{font-size:24px}
+.metric{background:#f4f7f5;border-radius:12px;padding:15px}
+.metric span{display:block;font-size:12px;margin-bottom:7px;color:#65756d}
+.metric strong{font-size:22px;overflow-wrap:anywhere}
 .metric.money{background:var(--secondary);color:var(--primary)}
-.steps{display:grid;gap:16px;margin-top:18px}
-.step{display:flex;gap:12px}
-.num{width:30px;height:30px;flex:0 0 30px;display:grid;place-items:center;border-radius:10px;background:var(--secondary);color:var(--primary);font-weight:bold}
-.step b{display:block;margin:2px 0 4px;font-size:14px}
-.step p{margin:0;font-size:13px;line-height:1.45;color:#65756d}
-.rates{margin-top:18px;border-top:1px solid #e0e7e2;padding-top:16px}
-.rate{display:flex;justify-content:space-between;gap:10px;padding:7px 0;font-size:13px}
-.footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:22px;color:#718078;font-size:12px}
-.status{font-size:13px;margin-top:12px;line-height:1.45}
-.hidden{display:none!important}
-@media(max-width:760px){header{padding:20px 16px;align-items:flex-start}.byline{display:none}main{padding:24px 16px}.intro{display:block}.pill{display:inline-block;margin-top:14px}.grid{grid-template-columns:1fr}.card{padding:20px}}
+.steps{margin-top:20px;line-height:1.5;font-size:14px}
+.steps p{margin:5px 0 14px;color:#65756d}
+.note{margin-top:18px;background:#fff5de;padding:12px;border-radius:10px;font-size:13px;line-height:1.5}
+.footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:24px;color:#718078;font-size:12px}
+@media(max-width:760px){header{padding:20px 16px}.byline{display:none}main{padding:20px 14px}.grid{grid-template-columns:1fr}.card{padding:17px}}
 </style>
 </head>
 <body>
 <header>
-  <div class="brand">
-    <div class="logo">✓</div>
-    <div>
-      <h1>Controllo Cartellini</h1>
-      <p>Verifica mensile · differenze · stima economica</p>
-    </div>
+  <div>
+    <h1>Controllo Cartellini</h1>
+    <p>Verifica mensile · differenze · stima economica</p>
   </div>
   <div class="byline">developed by Nicola Faraone</div>
 </header>
 
 <main>
   <div class="intro">
-    <div>
-      <h2>Controllo cartellino buoni pasto residui</h2>
-      <p>Carica i PDF mensili, controlla i buoni pasto residui ed esporta il riepilogo Excel e i PDF evidenziati.</p>
-    </div>
-    <div class="pill">PDF → Excel + PDF evidenziati</div>
+    <h2>Controllo cartellino buoni pasto residui</h2>
+    <p class="muted">Carica i cartellini PDF, verifica le giornate oltre le 6 ore ed esporta Excel e PDF evidenziati.</p>
   </div>
 
   <div class="grid">
     <section class="card">
       <h3>1. Carica i PDF</h3>
-      <p class="muted">Seleziona uno o più cartellini mensili oppure trascinali nell'area qui sotto.</p>
+      <p class="muted">Seleziona uno o più cartellini mensili.</p>
       <div class="drop" id="drop">
-        <div class="up">⇧</div>
         <strong>Trascina qui i cartellini PDF</strong>
         <span class="muted">oppure clicca per scegliere i file</span>
-        <small>Supporta “Stampa Cartellino Mensile” e “Cartellino Unico”</small>
       </div>
-      <input id="files" type="file" accept="application/pdf,.pdf" multiple class="hidden">
+      <input id="files" class="hidden" type="file" accept=".pdf,application/pdf" multiple>
       <div id="filelist" class="filelist"></div>
-      <button id="process" class="primary" disabled>Analizza cartellini e prepara Excel</button>
+      <button id="process" disabled>Analizza cartellini ed esporta</button>
       <div id="status" class="status muted" aria-live="polite">Seleziona i PDF per iniziare.</div>
-      <div class="note">I file sono elaborati nel browser. Verifica i risultati e i PDF evidenziati prima di utilizzare i totali.</div>
+      <div class="note">La pagina usa librerie caricate da Internet. Verifica il primo risultato prima di elaborare tutti i cartellini.</div>
     </section>
 
     <aside class="card">
       <h3>2. Riepilogo</h3>
-      <p class="muted">Il report mostrerà i conteggi per cartellino e la stima economica.</p>
+      <p class="muted">I risultati verranno mostrati dopo l'analisi.</p>
       <div class="metrics">
         <div class="metric"><span>PDF selezionati</span><strong id="count">0</strong></div>
         <div class="metric"><span>PDF da verificare</span><strong id="reviewCount">—</strong></div>
@@ -101,17 +81,19 @@ main{max-width:1100px;margin:auto;padding:30px 20px 45px}
         <div class="metric money"><span>Totale stimato</span><strong id="totalMoney">— €</strong></div>
       </div>
       <div class="steps">
-        <div class="step"><div class="num">1</div><div><b>Legge la colonna corretta</b><p>Formato vecchio: “Totale”. Formato nuovo: “Lavorato”.</p></div></div>
-        <div class="step"><div class="num">2</div><div><b>Conta le giornate valide</b><p>Solo valori strettamente superiori a 06:00; i valori negativi sono esclusi.</p></div></div>
-        <div class="step"><div class="num">3</div><div><b>Calcola la stima economica</b><p>4,17 € fino al 31/03/2024; 7,00 € dal 01/04/2024.</p></div></div>
-      </div>
-      <div class="rates">
-        <div class="rate"><span>Fino al 31 marzo 2024</span><strong>4,17 € / differenza</strong></div>
-        <div class="rate"><span>Dal 1° aprile 2024</span><strong>7,00 € / differenza</strong></div>
+        <b>Regole di calcolo</b>
+        <p>1. Vengono controllate tutte le colonne orarie di ogni giornata.</p>
+        <p>2. Una giornata viene conteggiata al massimo una volta, anche se più colonne superano 06:00.</p>
+        <p>3. Gli orari negativi sono sempre esclusi.</p>
+        <p>4. Tariffe: 4,17 € fino al 31/03/2024 e 7,00 € dal 01/04/2024.</p>
       </div>
     </aside>
   </div>
-  <div class="footer"><span>Controllo Cartellini · versione web</span><span>developed by Nicola Faraone</span></div>
+
+  <div class="footer">
+    <span>Controllo Cartellini · versione web</span>
+    <span>developed by Nicola Faraone</span>
+  </div>
 </main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
@@ -119,137 +101,146 @@ main{max-width:1100px;margin:auto;padding:30px 20px 45px}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
-const input = document.getElementById('files');
-const drop = document.getElementById('drop');
-const list = document.getElementById('filelist');
-const count = document.getElementById('count');
-const processBtn = document.getElementById('process');
-const statusEl = document.getElementById('status');
-const reviewCount = document.getElementById('reviewCount');
-const differenceCount = document.getElementById('differenceCount');
-const totalMoney = document.getElementById('totalMoney');
-let selected = [];
+const input=document.getElementById('files');
+const drop=document.getElementById('drop');
+const list=document.getElementById('filelist');
+const count=document.getElementById('count');
+const processBtn=document.getElementById('process');
+const statusEl=document.getElementById('status');
+const reviewCount=document.getElementById('reviewCount');
+const differenceCount=document.getElementById('differenceCount');
+const totalMoney=document.getElementById('totalMoney');
+let selected=[];
 
-if (window.pdfjsLib) {
-  pdfjsLib.GlobalWorkerOptions.workerSrc =
-    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-}
+pdfjsLib.GlobalWorkerOptions.workerSrc=
+'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-function render(files) {
-  selected = Array.from(files || []).filter(f => /\.pdf$/i.test(f.name));
-  list.innerHTML = '';
-  selected.forEach(file => {
-    const row = document.createElement('div');
-    row.className = 'file';
-    const icon = document.createElement('b');
-    icon.textContent = 'PDF';
-    icon.style.color = '#B34C37';
-    const name = document.createElement('span');
-    name.textContent = file.name;
-    const size = document.createElement('small');
-    size.textContent = Math.round(file.size / 1024) + ' KB';
-    size.style.marginLeft = 'auto';
-    row.append(icon, name, size);
-    list.append(row);
+function render(files){
+  selected=Array.from(files||[]).filter(f=>/\.pdf$/i.test(f.name));
+  list.innerHTML='';
+  selected.forEach(file=>{
+    const div=document.createElement('div');
+    div.className='file';
+    div.textContent=file.name+' ('+Math.round(file.size/1024)+' KB)';
+    list.appendChild(div);
   });
-  count.textContent = selected.length;
-  processBtn.disabled = selected.length === 0;
-  statusEl.textContent = selected.length
-    ? selected.length + ' PDF selezionat' + (selected.length === 1 ? 'o.' : 'i.')
-    : 'Seleziona i PDF per iniziare.';
+  count.textContent=selected.length;
+  processBtn.disabled=!selected.length;
+  statusEl.textContent=selected.length+' PDF selezionati.';
 }
 
-function norm(s) {
-  return (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+function norm(s){
+  return (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
 }
 
-function timeMinutes(s) {
-  const raw = (s || '').trim().replace(/\s/g, '');
-  if (!raw || raw.startsWith('-') || raw.startsWith('−')) return null;
-  const m = raw.match(/^(\+?\d{1,2})[.,:](\d{2})$/);
-  if (!m || Number(m[2]) >= 60) return null;
-  return Number(m[1]) * 60 + Number(m[2]);
+function timeMinutes(s){
+  const raw=(s||'').trim().replace(/\s/g,'');
+  if(!raw||raw.startsWith('-')||raw.startsWith('−'))return null;
+  const m=raw.match(/^(\+?\d{1,2})[.,:](\d{2})$/);
+  if(!m||Number(m[2])>=60)return null;
+  return Number(m[1])*60+Number(m[2]);
 }
 
-const months = {
-  gennaio:1, febbraio:2, marzo:3, aprile:4, maggio:5, giugno:6,
-  luglio:7, agosto:8, settembre:9, ottobre:10, novembre:11, dicembre:12
+const months={
+  gennaio:1,febbraio:2,marzo:3,aprile:4,maggio:5,giugno:6,
+  luglio:7,agosto:8,settembre:9,ottobre:10,novembre:11,dicembre:12
 };
 
-function monthYear(text, filename) {
-  const s = norm(text + ' ' + filename);
-  let m = s.match(/\b(\d{1,2})\s*\/\s*(\d{4})\b/);
-  if (m && +m[1] >= 1 && +m[1] <= 12) return {month:+m[1],year:+m[2]};
-  m = s.match(/\b(\d{4})-(\d{2})\b/);
-  if (m && +m[2] >= 1 && +m[2] <= 12) return {month:+m[2],year:+m[1]};
-  for (const [name, num] of Object.entries(months)) {
-    m = s.match(new RegExp('\\b' + name + '\\s+(20\\d{2})\\b'));
-    if (m) return {month:num,year:+m[1]};
-  }
-  m = s.match(/\bdal:\s*(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})/);
-  if (m) return {month:+m[2],year:+m[3]};
-  m = s.match(/\b(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})\b/);
-  if (m) return {month:+m[2],year:+m[3]};
-  return null;
-}
-
-function parseRows(items, viewport) {
-  const rows = [];
-  for (const item of items) {
-    const tr = pdfjsLib.Util.transform(viewport.transform, item.transform);
-    const x = tr[4], y = tr[5], text = (item.str || '').trim();
-    if (!text) continue;
-    let row = rows.find(r => Math.abs(r.y - y) < 3);
-    if (!row) { row = {y,items:[]}; rows.push(row); }
-    row.items.push({x,y,text,width:item.width || 0});
-  }
-  rows.forEach(r => r.items.sort((a,b) => a.x - b.x));
-  return rows.sort((a,b) => b.y - a.y);
-}
-
-function findColumnX(rows, format) {
-  const target = format === 'old' ? 'totale' : 'lavorato';
-  for (const row of rows) {
-    for (const item of row.items) {
-      if (norm(item.text) === target) return item.x + item.width / 2;
-    }
+function monthYear(text,filename){
+  const s=norm(text+' '+filename);
+  let m=s.match(/\bdal:\s*(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})/);
+  if(m)return {month:+m[2],year:+m[3]};
+  m=s.match(/\b(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})/);
+  if(m)return {month:+m[2],year:+m[3]};
+  m=s.match(/\b(\d{4})-(\d{2})\b/);
+  if(m)return {month:+m[2],year:+m[1]};
+  for(const [name,num] of Object.entries(months)){
+    m=s.match(new RegExp('\\b'+name+'\\s+(20\\d{2})\\b'));
+    if(m)return {month:num,year:+m[1]};
   }
   return null;
 }
 
-function nearestValue(items, x, maxDistance = 35) {
-  let best = null, distanceBest = Infinity;
-  for (const item of items) {
-    const minutes = timeMinutes(item.text);
-    if (minutes === null) continue;
-    const distance = Math.abs(item.x + item.width / 2 - x);
-    if (distance < distanceBest && distance <= maxDistance) {
-      best = minutes;
-      distanceBest = distance;
-    }
-  }
-  return best;
+function getFormat(text){
+  const t=norm(text);
+  if(t.includes('stampa cartellino mensile'))return 'old';
+  if(t.includes('cartellino unico'))return 'new';
+  if(t.includes('lavorato')&&t.includes('buoni pasto'))return 'new';
+  if(t.includes('totale')&&t.includes('buoni pasto'))return 'old';
+  return null;
 }
 
-function countBuoni(rows) {
-  for (let ri = 0; ri < rows.length; ri++) {
-    for (let ii = 0; ii < rows[ri].items.length; ii++) {
-      const item = rows[ri].items[ii];
-      const label = norm(item.text);
-      if (!label.includes('buoni pasto')) continue;
+function parseRows(items,viewport){
+  const rows=[];
+  for(const item of items){
+    const tr=pdfjsLib.Util.transform(viewport.transform,item.transform);
+    const text=(item.str||'').trim();
+    if(!text)continue;
+    let row=rows.find(r=>Math.abs(r.y-tr[5])<3);
+    if(!row){row={y:tr[5],items:[]};rows.push(row);}
+    row.items.push({
+      x:tr[4],y:tr[5],text,
+      width:Math.max(3,item.width||text.length*4),
+      height:Math.max(5,Math.abs(item.height||9))
+    });
+  }
+  rows.forEach(r=>r.items.sort((a,b)=>a.x-b.x));
+  return rows.sort((a,b)=>b.y-a.y);
+}
 
-      const inline = item.text.match(/buoni\s+pasto(?:\s+per\s+turnisti)?\D{0,20}(\d{1,3})/i);
-      if (inline) return +inline[1];
+function isDayRow(row,format){
+  const line=row.items.map(i=>i.text).join(' ');
+  return format==='old'
+    ? /^\s*(lun|mar|mer|gio|ven|sab|dom)\s+\d{1,2}\b/i.test(line)
+    : /^\s*(?:\d{1,2}\s+(?:lun|mar|mer|gio|ven|sab|dom)|(?:lun|mar|mer|gio|ven|sab|dom)\s+\d{1,2})\b/i.test(line);
+}
 
-      for (let j = ii + 1; j < rows[ri].items.length; j++) {
-        const m = rows[ri].items[j].text.match(/^\s*(\d{1,3})\s*$/);
-        if (m) return +m[1];
+function getDayNumber(row,format){
+  const line=row.items.map(i=>i.text).join(' ');
+  const m=format==='old'
+    ? line.match(/^\s*(?:lun|mar|mer|gio|ven|sab|dom)\s+(\d{1,2})\b/i)
+    : line.match(/^\s*(\d{1,2})\s+(?:lun|mar|mer|gio|ven|sab|dom)\b/i)
+      || line.match(/^\s*(?:lun|mar|mer|gio|ven|sab|dom)\s+(\d{1,2})\b/i);
+  return m?+m[1]:null;
+}
+
+/*
+ * Regola unica per il conteggio:
+ * esamina tutti i valori orari della riga giornaliera.
+ * Se almeno uno supera 360 minuti, la giornata conta una volta.
+ */
+function evaluateDayRow(row){
+  const times=[];
+  for(const item of row.items){
+    const minutes=timeMinutes(item.text);
+    if(minutes!==null)times.push({minutes,text:item.text});
+  }
+  return {
+    times,
+    over:times.some(t=>t.minutes>360),
+    maxMinutes:times.length?Math.max(...times.map(t=>t.minutes)):null
+  };
+}
+
+function countBuoni(rows){
+  for(let ri=0;ri<rows.length;ri++){
+    for(let ii=0;ii<rows[ri].items.length;ii++){
+      const item=rows[ri].items[ii];
+      const label=norm(item.text);
+      if(!label.includes('buoni pasto'))continue;
+
+      const inline=item.text.match(/buoni\s+pasto(?:\s+per\s+turnisti)?\D{0,20}(\d{1,3})/i);
+      if(inline)return +inline[1];
+
+      for(let j=ii+1;j<rows[ri].items.length;j++){
+        const m=rows[ri].items[j].text.match(/^\s*(\d{1,3})\s*$/);
+        if(m)return +m[1];
       }
 
-      for (let rj = ri + 1; rj <= Math.min(ri + 2, rows.length - 1); rj++) {
-        for (const next of rows[rj].items) {
-          const m = next.text.match(/^\s*(\d{1,3})\s*$/);
-          if (m) return +m[1];
+      for(let rj=ri+1;rj<=Math.min(ri+2,rows.length-1);rj++){
+        for(const next of rows[rj].items){
+          const m=next.text.match(/^\s*(\d{1,3})\s*$/);
+          if(m)return +m[1];
         }
       }
     }
@@ -257,133 +248,121 @@ function countBuoni(rows) {
   return null;
 }
 
-async function analyze(file) {
-  const result = {
-    file:file.name, period:'', format:'', daysOver:null,
-    buoni:null, difference:null, rate:null, amount:null, notes:'', days:[]
+async function analyze(file){
+  const result={
+    file:file.name,period:'',format:'',daysOver:null,
+    buoni:null,difference:null,rate:null,amount:null,notes:'',days:[]
   };
 
-  try {
-    const pdf = await pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise;
-    let allText = '';
-    const allRows = [];
+  try{
+    const pdf=await pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise;
+    let allText='';
+    const allRows=[];
 
-    for (let p = 1; p <= pdf.numPages; p++) {
-      const page = await pdf.getPage(p);
-      const content = await page.getTextContent();
-      const viewport = page.getViewport({scale:1});
-      const rows = parseRows(content.items, viewport);
-      allText += '\n' + rows.map(r => r.items.map(i => i.text).join(' ')).join('\n');
+    for(let p=1;p<=pdf.numPages;p++){
+      const page=await pdf.getPage(p);
+      const content=await page.getTextContent();
+      const rows=parseRows(content.items,page.getViewport({scale:1}));
+      allText+='\n'+rows.map(r=>r.items.map(i=>i.text).join(' ')).join('\n');
       allRows.push(...rows);
     }
 
-    const txt = norm(allText);
-    let format = txt.includes('stampa cartellino mensile') ? 'old'
-      : txt.includes('cartellino unico') ? 'new'
-      : txt.includes('lavorato') ? 'new'
-      : txt.includes('totale') ? 'old' : null;
+    const format=getFormat(allText);
+    result.format=format==='old'?'Stampa Cartellino Mensile':
+      format==='new'?'Cartellino Unico':'Formato non riconosciuto';
 
-    result.format = format === 'old' ? 'Stampa Cartellino Mensile'
-      : format === 'new' ? 'Cartellino Unico' : 'Formato non riconosciuto';
+    const my=monthYear(allText,file.name);
+    if(my)result.period=String(my.month).padStart(2,'0')+'/'+my.year;
+    else result.notes+='Periodo non riconosciuto; ';
 
-    const my = monthYear(allText, file.name);
-    if (my) result.period = String(my.month).padStart(2,'0') + '/' + my.year;
-    else result.notes += 'Periodo non riconosciuto; ';
-
-    if (!format) {
-      result.notes += 'Formato non riconosciuto; ';
+    if(!format){
+      result.notes+='Formato non riconosciuto; ';
       return result;
     }
 
-    const columnX = findColumnX(allRows, format);
-    if (columnX === null) {
-      result.notes += 'Colonna prevista non trovata; ';
-      return result;
-    }
+    const seenDays=new Set();
 
-    const seenDays = new Set();
+    for(const row of allRows){
+      if(!isDayRow(row,format))continue;
 
-    for (const row of allRows) {
-      const line = row.items.map(i => i.text).join(' ');
-      const dm = format === 'old'
-        ? line.match(/^\s*(lun|mar|mer|gio|ven|sab|dom)\s+(\d{1,2})\b/i)
-        : line.match(/^\s*(\d{1,2})\s+(lun|mar|mer|gio|ven|sab|dom)\b/i);
+      const day=getDayNumber(row,format);
+      if(day===null||day<1||day>31||seenDays.has(day))continue;
 
-      if (!dm) continue;
-
-      const day = +(format === 'old' ? dm[2] : dm[1]);
-      if (day < 1 || day > 31 || seenDays.has(day)) continue;
-
-      const minutes = nearestValue(row.items, columnX, 55);
-      if (minutes === null) continue;
+      const evaluated=evaluateDayRow(row);
+      if(!evaluated.times.length)continue;
 
       seenDays.add(day);
-      result.days.push({day,minutes,over:minutes > 360});
+      result.days.push({
+        day,
+        minutes:evaluated.maxMinutes,
+        over:evaluated.over,
+        matchedTimes:evaluated.times.map(t=>t.text)
+      });
     }
 
-    result.daysOver = result.days.filter(d => d.over).length;
+    result.daysOver=result.days.filter(d=>d.over).length;
 
-    if (!result.days.length) {
-      result.notes += 'Nessuna riga giornaliera riconosciuta; ';
+    if(!result.days.length){
+      result.notes+='Nessuna riga giornaliera riconosciuta; ';
       return result;
     }
 
-    result.buoni = countBuoni(allRows);
-
-    if (result.buoni === null) {
-      result.notes += 'Numero buoni pasto non riconosciuto; ';
+    result.buoni=countBuoni(allRows);
+    if(result.buoni===null){
+      result.notes+='Numero buoni pasto non riconosciuto; ';
       return result;
     }
 
-    result.difference = result.daysOver - result.buoni;
-    result.rate = my && (my.year < 2024 || (my.year === 2024 && my.month < 4)) ? 4.17 : 7;
-    result.amount = Math.max(0,result.difference) * result.rate;
+    result.difference=result.daysOver-result.buoni;
+    result.rate=my&&(my.year<2024||(my.year===2024&&my.month<4))?4.17:7;
+    result.amount=Math.max(0,result.difference)*result.rate;
 
-    if (result.days.length < 20) {
-      result.notes += 'Rilevate solo ' + result.days.length + ' righe giornaliere; verificare; ';
+    if(result.days.length<20){
+      result.notes+='Rilevate solo '+result.days.length+' righe giornaliere; verificare; ';
     }
-  } catch (e) {
-    result.notes = 'Errore di lettura PDF: ' + (e.message || 'errore sconosciuto') + '; ';
+  }catch(e){
+    result.notes='Errore di lettura PDF: '+(e.message||'errore sconosciuto')+'; ';
   }
 
   return result;
 }
 
-function euro(value) {
-  return new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR'}).format(value || 0);
+function euro(value){
+  return new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR'}).format(value||0);
 }
 
-function downloadExcel(results) {
-  const wb = XLSX.utils.book_new();
+function downloadExcel(results){
+  const wb=XLSX.utils.book_new();
 
-  const summary = results.map(r => ({
+  const summary=results.map(r=>({
     'File PDF':r.file,
     'Periodo':r.period,
     'Formato':r.format,
-    'Giornate > 06:00':r.daysOver,
+    'Giornate con almeno un orario > 06:00':r.daysOver,
     'Buoni pasto':r.buoni,
     'Differenza':r.difference,
     'Tariffa (€)':r.rate,
     'Importo stimato (€)':r.amount,
-    'Note':r.notes || 'OK'
+    'Note':r.notes||'OK'
   }));
 
   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(summary),'Riepilogo');
 
-  const daily = [];
-  results.forEach(r => r.days.forEach(d => daily.push({
+  const daily=[];
+  results.forEach(r=>r.days.forEach(d=>daily.push({
     'File PDF':r.file,
     'Periodo':r.period,
     'Giorno':d.day,
-    'Orario':String(Math.floor(d.minutes/60)).padStart(2,'0') + ':' + String(d.minutes%60).padStart(2,'0'),
-    'Oltre 06:00':d.over ? 'Sì' : 'No'
+    'Orario massimo rilevato':d.minutes===null?'':String(Math.floor(d.minutes/60)).padStart(2,'0')+':'+String(d.minutes%60).padStart(2,'0'),
+    'Almeno un orario > 06:00':d.over?'Sì':'No',
+    'Orari rilevati':(d.matchedTimes||[]).join(', ')
   })));
 
   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(daily),'Dettaglio giornaliero');
 
-  const total = results.reduce((s,r) => s + (r.amount || 0),0);
-  const diff = results.reduce((s,r) => s + Math.max(0,r.difference || 0),0);
-  const review = results.filter(r => r.notes).length;
+  const total=results.reduce((s,r)=>s+(r.amount||0),0);
+  const diff=results.reduce((s,r)=>s+Math.max(0,r.difference||0),0);
+  const review=results.filter(r=>r.notes).length;
 
   XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet([
     ['Voce','Valore'],
@@ -393,198 +372,134 @@ function downloadExcel(results) {
     ['Importo stimato totale (€)',Math.round(total*100)/100],
     ['Tariffa fino al 31/03/2024','4,17 €'],
     ['Tariffa dal 01/04/2024','7,00 €'],
+    ['Regola conteggio','Una giornata conta una volta se almeno una colonna oraria supera 06:00.'],
     ['Nota','Verificare manualmente i risultati segnalati.']
   ]),'Totale economico');
 
   XLSX.writeFile(wb,'report_controllo_cartellini.xlsx');
-
-  reviewCount.textContent = review;
-  differenceCount.textContent = diff;
-  totalMoney.textContent = euro(total);
+  reviewCount.textContent=review;
+  differenceCount.textContent=diff;
+  totalMoney.textContent=euro(total);
   return {review,diff,total};
 }
 
-/*
- * Evidenziazione PDF:
- * - formato vecchio: colonna Totale;
- * - formato nuovo: colonna Lavorato;
- * - solo valori strettamente superiori a 06:00;
- * - valori negativi sempre esclusi;
- * - evidenzia inoltre il numero vicino a "Buoni pasto".
- */
-async function downloadHighlightedPdfs(files) {
-  if (!window.PDFLib || !window.JSZip || !window.pdfjsLib) {
+async function downloadHighlightedPdfs(files){
+  if(!window.PDFLib||!window.JSZip||!window.pdfjsLib){
     throw new Error('Librerie PDF non disponibili. Controlla la connessione.');
   }
 
-  const {PDFDocument,rgb} = PDFLib;
-  const zip = new JSZip();
-  let highlighted = 0;
+  const {PDFDocument,rgb}=PDFLib;
+  const zip=new JSZip();
+  let highlighted=0;
 
-  for (const file of files) {
-    const bytes = await file.arrayBuffer();
-    const pdf = await PDFDocument.load(bytes);
-    const reader = await pdfjsLib.getDocument({data:bytes.slice(0)}).promise;
+  for(const file of files){
+    const bytes=await file.arrayBuffer();
+    const pdf=await PDFDocument.load(bytes);
+    const reader=await pdfjsLib.getDocument({data:bytes.slice(0)}).promise;
+    const outputPages=pdf.getPages();
 
-    for (let p = 1; p <= reader.numPages; p++) {
-      const page = await reader.getPage(p);
-      const viewport = page.getViewport({scale:1});
-      const content = await page.getTextContent();
-      const outputPage = pdf.getPages()[p-1];
+    for(let p=1;p<=reader.numPages;p++){
+      const page=await reader.getPage(p);
+      const viewport=page.getViewport({scale:1});
+      const content=await page.getTextContent();
+      const outputPage=outputPages[p-1];
 
-      const items = content.items
-        .filter(i => (i.str || '').trim() && i.transform)
-        .map(i => {
-          const t = pdfjsLib.Util.transform(viewport.transform,i.transform);
-          const a = viewport.convertToViewportRectangle([
-            t[4], t[5],
-            t[4] + (i.width || i.str.length * 4),
-            t[5] + (i.height || 9)
-          ]);
-
+      const items=content.items
+        .filter(i=>(i.str||'').trim()&&i.transform)
+        .map(i=>{
+          const t=pdfjsLib.Util.transform(viewport.transform,i.transform);
           return {
             text:i.str.trim(),
             x:t[4],
             y:t[5],
-            width:Math.max(3,i.width || i.str.length*4),
-            height:Math.max(5,Math.abs(i.height || 9)),
-            vx:t[4],
-            vy:t[5]
+            width:Math.max(3,i.width||i.str.length*4),
+            height:Math.max(5,Math.abs(i.height||9))
           };
         });
 
-      const pageText = items.map(i => i.text).join(' ').toLowerCase();
+      const pageText=items.map(i=>i.text).join(' ');
+      const format=getFormat(pageText);
+      if(!format)continue;
 
-      const format = pageText.includes('stampa cartellino mensile') ? 'old'
-        : pageText.includes('cartellino unico') ? 'new'
-        : pageText.includes('lavorato') ? 'new'
-        : pageText.includes('totale') ? 'old' : null;
-
-      if (!format) continue;
-
-      // Raggruppa i testi in righe.
-      const rows = [];
-
-      for (const item of items) {
-        let row = rows.find(r => Math.abs(r.y-item.y) < 3);
-        if (!row) {
-          row = {y:item.y,items:[]};
-          rows.push(row);
-        }
+      const rows=[];
+      for(const item of items){
+        let row=rows.find(r=>Math.abs(r.y-item.y)<3);
+        if(!row){row={y:item.y,items:[]};rows.push(row);}
         row.items.push(item);
       }
+      rows.forEach(r=>r.items.sort((a,b)=>a.x-b.x));
 
-      rows.forEach(r => r.items.sort((a,b) => a.x-b.x));
+      function highlight(item){
+        const left=item.x-1;
+        const top=item.y-item.height*0.85;
+        const right=left+item.width+2;
+        const bottom=top+item.height;
 
-      const columnName = format === 'old' ? 'totale' : 'lavorato';
-      const header = items.find(i => i.text.toLowerCase().trim() === columnName);
-      if (!header) continue;
-
-      const columnX = header.x + header.width/2;
-
-      /*
-       * PDF.js usa coordinate con origine in alto a sinistra nel viewport.
-       * pdf-lib usa origine in basso a sinistra.
-       * La conversione evita che i rettangoli finiscano in posizioni errate.
-       */
-      function highlight(item) {
-        const left = item.vx - 1;
-        const top = item.vy - item.height * 0.85;
-        const right = left + item.width + 2;
-        const bottom = top + item.height;
-
-        const topLeft = viewport.convertToPdfPoint(left,top);
-        const bottomRight = viewport.convertToPdfPoint(right,bottom);
+        const a=viewport.convertToPdfPoint(left,top);
+        const b=viewport.convertToPdfPoint(right,bottom);
 
         outputPage.drawRectangle({
-          x:Math.min(topLeft[0],bottomRight[0]),
-          y:Math.min(topLeft[1],bottomRight[1]),
-          width:Math.abs(bottomRight[0]-topLeft[0]),
-          height:Math.abs(bottomRight[1]-topLeft[1]),
+          x:Math.min(a[0],b[0]),
+          y:Math.min(a[1],b[1]),
+          width:Math.abs(b[0]-a[0]),
+          height:Math.abs(b[1]-a[1]),
           color:rgb(1,0.92,0.12),
           opacity:0.38,
           borderOpacity:0
         });
-
         highlighted++;
       }
 
-      // Evidenzia solo i valori temporali nella riga di un giorno.
-      for (const row of rows) {
-        const line = row.items.map(i => i.text).join(' ');
+      // Evidenzia tutti gli orari > 06:00 nella riga giornaliera,
+      // non soltanto quelli nella colonna Totale/Lavorato.
+      // Ogni singolo valore viene evidenziato, ma il conteggio resta
+      // una giornata sola anche se più colonne superano la soglia.
+      for(const row of rows){
+        if(!isDayRow(row,format))continue;
 
-        const isDay = format === 'old'
-          ? /^\s*(lun|mar|mer|gio|ven|sab|dom)\s+\d{1,2}\b/i.test(line)
-          : /^\s*\d{1,2}\s+(lun|mar|mer|gio|ven|sab|dom)\b/i.test(line);
-
-        if (!isDay) continue;
-
-        let best = null;
-        let bestDistance = Infinity;
-
-        for (const item of row.items) {
-          const raw = item.text.replace(/\s/g,'');
-
-          if (!raw || raw.startsWith('-') || raw.startsWith('−')) continue;
-
-          const match = raw.match(/^(\d{1,2})[.,:](\d{2})$/);
-          if (!match || Number(match[2]) >= 60) continue;
-
-          const minutes = Number(match[1])*60 + Number(match[2]);
-          if (minutes <= 360) continue;
-
-          const distance = Math.abs(item.x + item.width/2-columnX);
-
-          // La colonna di destinazione deve essere vicina al valore.
-          if (distance <= 35 && distance < bestDistance) {
-            best = item;
-            bestDistance = distance;
+        for(const item of row.items){
+          const minutes=timeMinutes(item.text);
+          if(minutes!==null&&minutes>360){
+            highlight(item);
           }
         }
-
-        if (best) highlight(best);
       }
 
-      // Cerca il numero accanto alla dicitura "Buoni pasto".
-      let label = null;
-      let labelRow = -1;
-      let labelIndex = -1;
+      // Evidenzia il numero associato a "Buoni pasto", se individuabile.
+      let label=null,labelRow=-1,labelIndex=-1;
 
-      for (let ri=0; ri<rows.length && !label; ri++) {
-        for (let ii=0; ii<rows[ri].items.length; ii++) {
-          if (rows[ri].items[ii].text.toLowerCase().includes('buoni pasto')) {
-            label = rows[ri].items[ii];
-            labelRow = ri;
-            labelIndex = ii;
+      for(let ri=0;ri<rows.length&&!label;ri++){
+        for(let ii=0;ii<rows[ri].items.length;ii++){
+          if(norm(rows[ri].items[ii].text).includes('buoni pasto')){
+            label=rows[ri].items[ii];
+            labelRow=ri;
+            labelIndex=ii;
             break;
           }
         }
       }
 
-      if (label) {
-        const candidates = [];
+      if(label){
+        const candidates=[];
+        for(let ri=labelRow;ri<=Math.min(rows.length-1,labelRow+2);ri++){
+          const start=ri===labelRow?labelIndex+1:0;
+          for(let ii=start;ii<rows[ri].items.length;ii++){
+            const item=rows[ri].items[ii];
+            if(!/^\d{1,3}$/.test(item.text))continue;
 
-        for (let ri=labelRow; ri<=Math.min(rows.length-1,labelRow+2); ri++) {
-          const start = ri===labelRow ? labelIndex+1 : 0;
+            const dx=item.x-(label.x+label.width);
+            const dy=Math.abs(item.y-label.y);
 
-          for (let ii=start; ii<rows[ri].items.length; ii++) {
-            const item = rows[ri].items[ii];
-            if (!/^\d{1,3}$/.test(item.text)) continue;
-
-            const dx = item.x-(label.x+label.width);
-            const dy = Math.abs(item.y-label.y);
-
-            if (dx >= -3 && dx <= 120) {
+            if(dx>=-3&&dx<=120){
               candidates.push({
                 item,
-                score:(ri===labelRow ? 0 : dy*2)+dx*0.02
+                score:(ri===labelRow?0:dy*2)+dx*0.02
               });
             }
           }
         }
-
         candidates.sort((a,b)=>a.score-b.score);
-        if (candidates.length) highlight(candidates[0].item);
+        if(candidates.length)highlight(candidates[0].item);
       }
     }
 
@@ -592,15 +507,14 @@ async function downloadHighlightedPdfs(files) {
       file.name.replace(/\.pdf$/i,'')+'_evidenziato.pdf',
       await pdf.save()
     );
-
     await reader.destroy();
   }
 
-  const blob = await zip.generateAsync({type:'blob'});
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = 'cartellini_pdf_evidenziati.zip';
+  const blob=await zip.generateAsync({type:'blob'});
+  const url=URL.createObjectURL(blob);
+  const link=document.createElement('a');
+  link.href=url;
+  link.download='cartellini_pdf_evidenziati.zip';
   document.body.appendChild(link);
   link.click();
   link.remove();
@@ -612,15 +526,15 @@ async function downloadHighlightedPdfs(files) {
 drop.addEventListener('click',()=>input.click());
 input.addEventListener('change',()=>render(input.files));
 
-['dragenter','dragover'].forEach(eventName => {
-  drop.addEventListener(eventName,e=>{
+['dragenter','dragover'].forEach(name=>{
+  drop.addEventListener(name,e=>{
     e.preventDefault();
     drop.classList.add('drag');
   });
 });
 
-['dragleave','drop'].forEach(eventName => {
-  drop.addEventListener(eventName,e=>{
+['dragleave','drop'].forEach(name=>{
+  drop.addEventListener(name,e=>{
     e.preventDefault();
     drop.classList.remove('drag');
   });
@@ -629,19 +543,18 @@ input.addEventListener('change',()=>render(input.files));
 drop.addEventListener('drop',e=>render(e.dataTransfer.files));
 
 processBtn.addEventListener('click',async()=>{
-  if (!window.pdfjsLib || !window.XLSX) {
-    statusEl.textContent='Impossibile caricare le librerie. Controlla la connessione e ricarica la pagina.';
+  if(!window.pdfjsLib||!window.XLSX||!window.PDFLib||!window.JSZip){
+    statusEl.textContent='Librerie non disponibili. Controlla la connessione e ricarica la pagina.';
     return;
   }
 
   processBtn.disabled=true;
   processBtn.textContent='Analisi in corso…';
-  statusEl.textContent='Lettura dei PDF in corso. Non chiudere la pagina.';
 
-  try {
+  try{
     const results=[];
 
-    for (let i=0;i<selected.length;i++) {
+    for(let i=0;i<selected.length;i++){
       statusEl.textContent='Analisi '+(i+1)+' di '+selected.length+': '+selected[i].name;
       results.push(await analyze(selected[i]));
     }
@@ -649,23 +562,20 @@ processBtn.addEventListener('click',async()=>{
     const totals=downloadExcel(results);
 
     statusEl.textContent='Excel creato. Preparazione dei PDF evidenziati…';
-
     const marked=await downloadHighlightedPdfs(selected);
 
     processBtn.textContent='Analisi completata — ripeti';
     statusEl.textContent=
-      'Creati il report Excel e lo ZIP con '+marked.files+
-      ' PDF. Elementi evidenziati: '+marked.highlights+
+      'Operazione completata. PDF elaborati: '+marked.files+
+      '. Valori evidenziati: '+marked.highlights+
       '. PDF da verificare: '+totals.review+
-      '. Controlla i file generati prima di utilizzare i risultati.';
-  } catch (e) {
-    statusEl.textContent='Errore: '+(e.message || 'errore durante l’elaborazione')+
-      '. Se l’Excel è già stato scaricato, controlla la connessione e riprova.';
-  } finally {
+      '. Controlla i risultati prima di utilizzare i totali.';
+  }catch(e){
+    statusEl.textContent='Errore: '+(e.message||'errore durante l’elaborazione')+
+      '. Controlla la connessione e riprova.';
+    processBtn.textContent='Riprova analisi ed esportazione';
+  }finally{
     processBtn.disabled=false;
-    if (processBtn.textContent==='Analisi in corso…') {
-      processBtn.textContent='Analizza cartellini e prepara Excel';
-    }
   }
 });
 </script>
